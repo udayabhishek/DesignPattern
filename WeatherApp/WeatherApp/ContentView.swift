@@ -8,42 +8,52 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var isNight = true
+    @State private var isNight = false
     
     var body: some View {
         ZStack {
-            BackgroundView(topColor: .blue, bottomColor: Color("lightBlue1"))
-            
+            BackgroundView(isNight: $isNight)
+            Button(/*@START_MENU_TOKEN@*/"Button"/*@END_MENU_TOKEN@*/) {
+                /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
+            }
+
             VStack {
-                CityTextView(cityName: "Bulandshahr, UP")
+                CityTextView(cityName: isNight ? "Bangalore" : "Bulandshahr")
                 
-                CurrentWeatherView(imageName: "cloud.sun.rain.fill", temperature: 33)
+                CurrentWeatherView(imageName: isNight ? "smoke.fill" : "cloud.sun.rain.fill",
+                                   temperature: isNight ? 21 : 33)
                 Spacer()
                 
-                HStack {
-                    WeatherDayView(dayOfWeek: "TUE", imageName: "cloud.sun.rain.fill", temperature: 50)
+                HStack(spacing: 30) {
+                    WeatherDayView(dayOfWeek: "TUE",
+                                   imageName: "cloud.sun.rain.fill",
+                                   temperature: 50)
                     
-                    WeatherDayView(dayOfWeek: "WED", imageName: "sun.max.fill", temperature: 30)
+                    WeatherDayView(dayOfWeek: "WED",
+                                   imageName: "sun.max.fill",
+                                   temperature: 30)
                     
-                    WeatherDayView(dayOfWeek: "THS", imageName: "cloud.snow.fill", temperature: 60)
+                    WeatherDayView(dayOfWeek: "THS",
+                                   imageName: "cloud.snow.fill",
+                                   temperature: 60)
                     
-                    WeatherDayView(dayOfWeek: "FRI", imageName: "tornado", temperature: 60)
+                    WeatherDayView(dayOfWeek: "FRI",
+                                   imageName: "tornado",
+                                   temperature: 60)
                     
-                    WeatherDayView(dayOfWeek: "SAT", imageName: "wind", temperature: 50)
+                    WeatherDayView(dayOfWeek: "SAT",
+                                   imageName: "wind",
+                                   temperature: 50)
                 }
                 Spacer()
                 
                 Button {
-                    print("tapped")
+                    isNight.toggle()
                 } label: {
-                    Text("Change time")
-                        .frame(width: 280, height: 50)
-                        .background(.white)
-                        .cornerRadius(5)
-                        .font(.system(size: 20, weight: .bold, design: .default))
+                    WeatherButton(title: "Change day time",
+                                  textColor: .blue,
+                                  backgroundColor: .white)
                 }
-                .font(.system(size: 32, weight: .medium, design: .default))
-                
                 Spacer()
             }
         }
@@ -76,6 +86,27 @@ struct WeatherDayView: View {
     }
 }
 
+struct BackgroundView: View {
+    @Binding var isNight: Bool
+    
+    var body: some View {
+        LinearGradient(colors: [isNight ? .blue : .black, isNight ? .gray : Color("lightBlue1")],
+                       startPoint: .topLeading,
+                       endPoint: .bottomTrailing)
+        .edgesIgnoringSafeArea(.all)
+    }
+}
+
+struct CityTextView: View {
+    var cityName: String
+    var body: some View {
+        Text(cityName)
+            .font(.system(size: 32, weight: .medium, design: .default))
+            .foregroundColor(.white)
+            .padding()
+    }
+}
+
 struct CurrentWeatherView: View {
     var imageName: String
     var temperature: Int
@@ -92,27 +123,5 @@ struct CurrentWeatherView: View {
                 .font(.system(size: 60, weight: .medium, design: .default))
                 .foregroundColor(.white)
         }
-    }
-}
-
-struct BackgroundView: View {
-    var topColor: Color
-    var bottomColor: Color
-    
-    var body: some View {
-        LinearGradient(colors: [topColor, bottomColor],
-                       startPoint: .topLeading,
-                       endPoint: .bottomTrailing)
-        .edgesIgnoringSafeArea(.all)
-    }
-}
-
-struct CityTextView: View {
-    var cityName: String
-    var body: some View {
-        Text(cityName)
-            .font(.system(size: 32, weight: .medium, design: .default))
-            .foregroundColor(.white)
-            .padding()
     }
 }
