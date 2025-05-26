@@ -13,9 +13,6 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             BackgroundView(isNight: $isNight)
-            Button(/*@START_MENU_TOKEN@*/"Button"/*@END_MENU_TOKEN@*/) {
-                /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
-            }
 
             VStack {
                 CityTextView(cityName: isNight ? "Bangalore" : "Bulandshahr")
