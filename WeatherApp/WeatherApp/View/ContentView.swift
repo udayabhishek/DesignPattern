@@ -9,16 +9,36 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var isNight = false
+    @StateObject private var viewModel = WeatherViewModel()
+
     
     var body: some View {
         ZStack {
             BackgroundView(isNight: $isNight)
 
             VStack {
-                CityTextView(cityName: isNight ? "Bangalore" : "Bulandshahr")
+                if let weather = viewModel.weather {
+                    CityTextView(cityName: isNight ? weather.name : "Bulandshahr")
+                    let temp =
+                    CurrentWeatherView(imageName: isNight ? "smoke.fill" : "cloud.sun.rain.fill",
+                                       temperature: isNight ? temp : 33)
+                    
+                    
+                    
+                    
+                    Text("Temperature: \(weather.main.temp, specifier: "%.1f")°C")
+                        .font(.headline)
+                    Text("Weather: \(weather.weather.first?.description ?? "N/A")")
+                        .font(.subheadline)
+                } else if let errorMessage = viewModel.errorMessage {
+                    Text("Error: \(errorMessage)")
+                        .foregroundColor(.red)
+                } else {
+                    Text("Loading...")
+                }
                 
-                CurrentWeatherView(imageName: isNight ? "smoke.fill" : "cloud.sun.rain.fill",
-                                   temperature: isNight ? 21 : 33)
+                
+                
                 Spacer()
                 
                 HStack(spacing: 30) {
@@ -46,6 +66,8 @@ struct ContentView: View {
                 
                 Button {
                     isNight.toggle()
+                    
+                   
                 } label: {
                     WeatherButton(title: "Change day time",
                                   textColor: .blue,
@@ -54,6 +76,10 @@ struct ContentView: View {
                 Spacer()
             }
         }
+        .onAppear {
+            viewModel.fetchWeather(forLatitude: 12.9716, longitude: 77.5946)
+        }
+        .padding()
     }
 }
 
@@ -106,7 +132,7 @@ struct CityTextView: View {
 
 struct CurrentWeatherView: View {
     var imageName: String
-    var temperature: Int
+    var temperature: Double
     
     var body: some View {
         VStack(spacing: 10) {
