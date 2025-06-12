@@ -23,7 +23,7 @@ class LoginViewModel: ObservableObject {
     }
 
     var isValid: Bool {
-        !username.isEmpty && !password.isEmpty
+        !username.isEmpty && !password.isEmpty && password.count >= 5
     }
 
     func login() {
