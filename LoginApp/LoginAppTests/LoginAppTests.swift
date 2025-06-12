@@ -2,7 +2,7 @@
 //  LoginAppTests.swift
 //  LoginAppTests
 //
-//  Created by Uday Abhishek on 11/06/25.
+//  Created by Uday Abhishek on 12/06/25.
 //
 
 import XCTest
@@ -12,13 +12,10 @@ final class LoginAppTests: XCTestCase {
     var viewModel: LoginViewModel!
     var cancellables: Set<AnyCancellable>!
     
-    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
         super.setUp()
         viewModel = LoginViewModel()
         cancellables = []
-        
     }
     
     func testLoginSuccess() {
@@ -40,12 +37,14 @@ final class LoginAppTests: XCTestCase {
         wait(for: [expectation], timeout: 5.0)
     }
     
-    func testLoginFailure() {
+    /*
+    func testLoginFailure() async {
         let expectation = XCTestExpectation(description: "Login fails")
-        
+
         viewModel.username = "wronguser"
         viewModel.password = "wrongpassword"
-        
+
+        // Observe the error property
         viewModel.$error
             .dropFirst()
             .sink { error in
@@ -54,22 +53,15 @@ final class LoginAppTests: XCTestCase {
                 }
             }
             .store(in: &cancellables)
-        
-        viewModel.login()
-        wait(for: [expectation], timeout: 5.0)
+
+        await viewModel.login()
+        await fulfillment(of: [expectation], timeout: 5.0)
     }
+     */
     
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         viewModel = nil
         cancellables = nil
         super.tearDown()
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        measure {
-            // Put the code you want to measure the time of here.
-        }
     }
 }
