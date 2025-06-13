@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
     @StateObject private var viewModel = LoginViewModel()
+    @ObservedObject var coordinator: AppCoordinator
 
     var body: some View {
         VStack {
@@ -47,9 +48,5 @@ struct LoginView: View {
         
         Spacer()
     }
-}
-
-#Preview {
-    LoginView()
 }
 
