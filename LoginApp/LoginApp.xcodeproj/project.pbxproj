@@ -39,15 +39,15 @@
 		1CD5E6282DF985B500B50DBB /* Exceptions for "LoginApp" folder in "LoginAppTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				LoginUseCase.swift,
-				LoginViewModel.swift,
+				Domain/LoginUseCase.swift,
+				Presentation/ViewModel/LoginViewModel.swift,
 			);
 			target = 1CD5E6062DF9822800B50DBB /* LoginAppTests */;
 		};
 		1CD5E6292DF985B500B50DBB /* Exceptions for "LoginApp" folder in "LoginAppUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				LoginUseCase.swift,
+				Domain/LoginUseCase.swift,
 			);
 			target = 1CD5E6102DF9822800B50DBB /* LoginAppUITests */;
 		};
